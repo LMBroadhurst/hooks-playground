@@ -1,25 +1,57 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+
+  const [quantity, setQuantity] = useState(0);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <CartItem
+        name={"Apples"}
+        quantity={quantity}
+        remove={ () => {
+          if (quantity > 0) {
+            setQuantity(quantity - 1)
+          }
+        } }
+        add={ () => setQuantity(quantity + 1)}
+      />
+
+      <CartItem
+        name={"Bananas"}
+        quantity={quantity}
+        remove={ () => {
+          if (quantity > 0) {
+            setQuantity(quantity - 1)
+          }
+        } }
+        add={ () => setQuantity(quantity + 1)}
+      />
+
+      <CartItem
+        name={"Grapes"}
+        quantity={quantity}
+        remove={ () => {
+          if (quantity > 0) {
+            setQuantity(quantity - 1)
+          }
+        } }
+        add={ () => setQuantity(quantity + 1)}
+      />
+    </>
   );
+}
+
+const CartItem = ( {name, remove, add, quantity} ) => {
+  return (
+    <>
+      <span>{`${name}`}</span>
+      <button onClick={remove}>-</button>
+      <input value={quantity} readonly />
+      <button onClick={add}>+</button>
+    </>
+  )
 }
 
 export default App;
