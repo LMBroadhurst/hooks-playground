@@ -1,57 +1,42 @@
-import { useState } from 'react';
-import './App.css';
-
-function App() {
-
-  const [quantity, setQuantity] = useState(0);
-
-  return (
-    <>
-      <CartItem
-        name={"Apples"}
-        quantity={quantity}
-        remove={ () => {
-          if (quantity > 0) {
-            setQuantity(quantity - 1)
-          }
-        } }
-        add={ () => setQuantity(quantity + 1)}
-      />
-
-      <CartItem
-        name={"Bananas"}
-        quantity={quantity}
-        remove={ () => {
-          if (quantity > 0) {
-            setQuantity(quantity - 1)
-          }
-        } }
-        add={ () => setQuantity(quantity + 1)}
-      />
-
-      <CartItem
-        name={"Grapes"}
-        quantity={quantity}
-        remove={ () => {
-          if (quantity > 0) {
-            setQuantity(quantity - 1)
-          }
-        } }
-        add={ () => setQuantity(quantity + 1)}
-      />
-    </>
-  );
-}
-
-const CartItem = ( {name, remove, add, quantity} ) => {
-  return (
-    <>
-      <span>{`${name}`}</span>
-      <button onClick={remove}>-</button>
-      <input value={quantity} readonly />
-      <button onClick={add}>+</button>
-    </>
-  )
-}
-
+import { useEffect, useState } from "react"; 
+import { Table } from "react-bootstrap"; 
+import "bootstrap/dist/css/bootstrap.min.css"; 
+function App() { 
+  return ( 
+    <MyMovieList /> 
+  ); 
+} 
+const MyMovieList = () => { 
+  const [movies, setMovies] = useState([]); 
+  useEffect( 
+    () => { 
+      fetch(`http://localhost:8080/movies`) 
+        .then(response => response.json()) 
+        .then(result => setMovies(result)) 
+    }, [] 
+  ) 
+  return ( 
+    <> 
+      <h1>Star War Movies</h1> 
+      <Table striped bordered hover variant="dark"> 
+        <thead> 
+          <tr> 
+            <th>#</th> 
+            <th>Title</th> 
+            <th>Release Date</th> 
+          </tr> 
+        </thead> 
+        <tbody> 
+          {movies.map((movie) => ( 
+            <tr> 
+              <td>{movie.episode_id}</td> 
+              <td>{movie.title}</td> 
+              <td>{movie.release_date}</td> 
+            </tr> 
+          ))} 
+        </tbody> 
+      </Table> 
+    </> 
+  ); 
+} 
 export default App;
